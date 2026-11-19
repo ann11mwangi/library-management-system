@@ -1,4 +1,5 @@
 import { PrismaClient, Role } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -48,15 +49,27 @@ async function main() {
     });
   }
 
+    const passwordHash = await bcrypt.hash('password123', 10);
+
   await prisma.user.upsert({
     where: { email: 'librarian@example.com' },
-    update: {},
-    create: { email: 'librarian@example.com', name: 'Lena Librarian', role: Role.LIBRARIAN },
+    update: { password: passwordHash },
+    create: {
+      email: 'librarian@example.com',
+      name: 'Lena Librarian',
+      password: passwordHash,
+      role: Role.LIBRARIAN,
+    },
   });
   await prisma.user.upsert({
     where: { email: 'patron@example.com' },
-    update: {},
-    create: { email: 'patron@example.com', name: 'Pat Patron', role: Role.PATRON },
+    update: { password: passwordHash },
+    create: {
+      email: 'patron@example.com',
+      name: 'Pat Patron',
+      password: passwordHash,
+      role: Role.PATRON,
+    },
   });
 
   const [genres, books] = await Promise.all([prisma.genre.count(), prisma.book.count()]);

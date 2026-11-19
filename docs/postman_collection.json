@@ -1,0 +1,34 @@
+{
+  "info": {
+    "name": "Library Management System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" }
+  ],
+  "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+  "item": [
+    { "name": "Auth", "item": [
+      { "name": "Register", "auth": { "type": "noauth" }, "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/register", "body": { "mode": "raw", "raw": "{\n  \"email\": \"librarian@test.com\",\n  \"password\": \"password123\",\n  \"name\": \"Lib\"\n}" } } },
+      { "name": "Login", "auth": { "type": "noauth" }, "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.collectionVariables.set('token', pm.response.json().access_token);"] } }], "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"librarian@test.com\",\n  \"password\": \"password123\"\n}" } } }
+    ]},
+    { "name": "Users", "item": [
+      { "name": "Get Profile", "request": { "method": "GET", "url": "{{baseUrl}}/users/profile" } }
+    ]},
+    { "name": "Genres", "item": [
+      { "name": "Create Genre", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/genres", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Fantasy\"\n}" } } },
+      { "name": "List Genres", "request": { "method": "GET", "url": "{{baseUrl}}/genres" } },
+      { "name": "Get Genre", "request": { "method": "GET", "url": "{{baseUrl}}/genres/1" } },
+      { "name": "Update Genre", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/genres/1", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Science Fiction\"\n}" } } },
+      { "name": "Delete Genre", "request": { "method": "DELETE", "url": "{{baseUrl}}/genres/1" } }
+    ]},
+    { "name": "Books", "item": [
+      { "name": "List Books (filter/search/pagination)", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/books?genreId=1&search=harry&page=1&limit=10", "host": ["{{baseUrl}}"], "path": ["books"], "query": [{ "key": "genreId", "value": "1" }, { "key": "search", "value": "harry" }, { "key": "page", "value": "1" }, { "key": "limit", "value": "10" }] } } },
+      { "name": "Get Book", "request": { "method": "GET", "url": "{{baseUrl}}/books/1" } },
+      { "name": "Create Book (LIBRARIAN)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/books", "body": { "mode": "raw", "raw": "{\n  \"title\": \"Dune\",\n  \"author\": \"Frank Herbert\",\n  \"isbn\": \"9780441172719\",\n  \"totalCopies\": 3,\n  \"genreId\": 1\n}" } } },
+      { "name": "Update Book (LIBRARIAN)", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/books/1", "body": { "mode": "raw", "raw": "{\n  \"totalCopies\": 5\n}" } } },
+      { "name": "Delete Book (LIBRARIAN)", "request": { "method": "DELETE", "url": "{{baseUrl}}/books/1" } }
+    ]}
+  ]
+}
