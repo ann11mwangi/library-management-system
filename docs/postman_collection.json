@@ -10,8 +10,8 @@
   "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
   "item": [
     { "name": "Auth", "item": [
-      { "name": "Register", "auth": { "type": "noauth" }, "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/register", "body": { "mode": "raw", "raw": "{\n  \"email\": \"librarian@test.com\",\n  \"password\": \"password123\",\n  \"name\": \"Lib\"\n}" } } },
-      { "name": "Login", "auth": { "type": "noauth" }, "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.collectionVariables.set('token', pm.response.json().access_token);"] } }], "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"librarian@test.com\",\n  \"password\": \"password123\"\n}" } } }
+      { "name": "Register", "auth": { "type": "noauth" }, "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/register", "body": { "mode": "raw", "raw": "{\n  \"email\": \"newuser@test.com\",\n  \"password\": \"password123\",\n  \"name\": \"Lib\"\n}" } } },
+      { "name": "Login", "auth": { "type": "noauth" }, "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.collectionVariables.set('token', pm.response.json().access_token);"] } }], "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"librarian@example.com\",\n  \"password\": \"password123\"\n}" } } }
     ]},
     { "name": "Users", "item": [
       { "name": "Get Profile", "request": { "method": "GET", "url": "{{baseUrl}}/users/profile" } }
